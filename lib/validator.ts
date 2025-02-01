@@ -11,6 +11,7 @@ export const PostInputSchema = z.object({
   isPublished: z.boolean().default(true),
   author: z.string().min(1, '저자는 필수입니다.'),
   images: z.string().min(1, '이미지 경로는 필수입니다.'),
+  youtubeId: z.string(),
   tags: z.array(z.string()).default([]),
   reviews: z.array(z.string()).default([]),
   numReviews: z.coerce
