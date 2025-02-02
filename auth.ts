@@ -8,13 +8,12 @@ import User from './lib/db/models/user.model';
 import NextAuth, { type DefaultSession } from 'next-auth';
 import authConfig from './auth.config';
 
-// NextAuth의 Session 인터페이스를 확장하여 user 객체에 role 속성을 추가
 declare module 'next-auth' {
-  // eslint-disable-next-line no-unused-vars
   interface Session {
     user: {
       role: string;
       visitCount: number;
+      image: string;
     } & DefaultSession['user'];
   }
 }
@@ -49,7 +48,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const user = await User.findOneAndUpdate(
           { email: credentials.email },
           { $inc: { visitCount: 1 } }, // visitCount 값 증가
-          { new: true, projection: 'name email role visitCount password' } // 최신 값 반환
+          { new: true, projection: 'name email role visitCount password image' } // 최신 값 반환
         );
 
         // 사용자가 존재하고 비밀번호가 저장되어 있는 경우
@@ -65,6 +64,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               email: user.email,
               role: user.role,
               visitCount: user.visitCount,
+              image: user.image,
             };
           }
         }
@@ -88,6 +88,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.name = user.name || user.email!.split('@')[0];
         token.role = (user as { role: string }).role;
         token.visitCount = (user as { visitCount: number }).visitCount ?? 0;
+        token.image = user.image;
       }
 
       // 세션이 업데이트되었을 때 토큰의 name 정보 갱신
@@ -102,6 +103,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       session.user.role = token.role as string; // 역할(role) 추가
       session.user.name = token.name; // 이름 추가
       session.user.visitCount = token.visitCount as number; // 방문 횟수 추가
+      session.user.image = token.image as string;
       // 세션 업데이트 시 이름 변경
       if (trigger === 'update') {
         session.user.name = user.name;

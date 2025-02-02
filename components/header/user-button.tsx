@@ -25,7 +25,7 @@ export default async function UserButton() {
             <div className='w-full px-2 py-1 pr-3 bg-background rounded-full flex items-center justify-center ring ring-gray-300/20 hover:ring-gray-300/60 bg-mainBg cursor-pointer'>
               <div>
                 <Image
-                  src={session.user.image || '/images/default.jpg'} // 소셜 로그인 프로필 이미지 사용
+                  src={session.user.image || '/images/default.jpg'}
                   alt={session.user.name || 'Profile'}
                   width={30}
                   height={30}

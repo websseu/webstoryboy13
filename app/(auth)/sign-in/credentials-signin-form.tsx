@@ -63,7 +63,7 @@ export default function CredentialsSignInForm() {
         throw error;
       }
       toast({
-        title: 'Error',
+        title: '에러',
         description: '이메일 또는 비밀번호가 일치하지 않습니다.',
         variant: 'destructive',
       });

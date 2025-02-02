@@ -186,13 +186,10 @@ body {
   }
   .post__list td,
   .post__list th {
-    @apply text-center text-black300;
+    @apply text-black300;
   }
   .post__list th {
-    @apply text-black200;
-  }
-  .post__list td:first-child {
-    @apply text-left;
+    @apply text-black200 text-center;
   }
   .tags {
     @apply bg-slate-400 rounded-sm text-xs px-2 text-white capitalize font-nanum;
